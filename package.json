@@ -1,0 +1,49 @@
+{
+  "name": "@sharapov/service-kit",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "The plumbing shared by the my* services: Fastify shell with content negotiation, a closed content security policy, translation loading, a paced outbound scheduler and the sharapov.biz design tokens",
+  "homepage": "https://github.com/sharapov-outsource/service-kit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sharapov-outsource/service-kit.git"
+  },
+  "bugs": "https://github.com/sharapov-outsource/service-kit/issues",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./check-i18n": "./lib/check-i18n.js",
+    "./make-icons": "./scripts/make-icons.js",
+    "./templates/*": "./templates/*",
+    "./public/*": "./public/*",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "kit-check-i18n": "bin/check-i18n.js"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "bin",
+    "public",
+    "scripts",
+    "templates",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "check:syntax": "node --check index.js && node --check lib/service.js && node --check lib/i18n.js && node --check lib/format.js && node --check lib/security.js && node --check lib/cache.js && node --check lib/target.js && node --check lib/pace.js && node --check lib/services.js && node --check lib/report.js && node --check lib/check-i18n.js && node --check public/i18n-common.js && node --check scripts/make-icons.js",
+    "test:unit": "node --test \"test/*.test.js\"",
+    "test": "npm run check:syntax && npm run test:unit"
+  },
+  "dependencies": {
+    "@fastify/rate-limit": "^10.2.2",
+    "@fastify/static": "^10.1.2",
+    "fastify": "^5.2.1",
+    "yaml": "^2.7.0"
+  }
+}

@@ -1,0 +1,643 @@
+/* ==========================================================================
+   @sharapov/service-kit — the design system every my* service is drawn with.
+   Warm paper ground, graphite ink, one vivid indigo accent used sparingly.
+   Fonts are served from the package so the content security policy can stay
+   closed: no external stylesheet, no external font host, no 'unsafe-inline'.
+
+   A service loads this first and then its own styles.css for whatever it draws
+   that nothing else does.
+   ========================================================================== */
+
+@font-face {
+  font-family:'Geist';
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+  src:url('/static/kit/fonts/geist-cyrillic-ext.woff2') format('woff2');
+  unicode-range:U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F
+}
+@font-face {
+  font-family:'Geist';
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+  src:url('/static/kit/fonts/geist-cyrillic.woff2') format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116
+}
+@font-face {
+  font-family:'Geist';
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+  src:url('/static/kit/fonts/geist-latin-ext.woff2') format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF
+}
+@font-face {
+  font-family:'Geist';
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+  src:url('/static/kit/fonts/geist-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
+}
+@font-face {
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+  src:url('/static/kit/fonts/inter-cyrillic-ext.woff2') format('woff2');
+  unicode-range:U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F
+}
+@font-face {
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+  src:url('/static/kit/fonts/inter-cyrillic.woff2') format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116
+}
+@font-face {
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+  src:url('/static/kit/fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF
+}
+@font-face {
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+  src:url('/static/kit/fonts/inter-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
+}
+@font-face {
+  font-family:'JetBrains Mono';
+  font-style:normal;
+  font-weight:400 600;
+  font-display:swap;
+  src:url('/static/kit/fonts/jetbrains-mono-cyrillic-ext.woff2') format('woff2');
+  unicode-range:U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F
+}
+@font-face {
+  font-family:'JetBrains Mono';
+  font-style:normal;
+  font-weight:400 600;
+  font-display:swap;
+  src:url('/static/kit/fonts/jetbrains-mono-cyrillic.woff2') format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116
+}
+@font-face {
+  font-family:'JetBrains Mono';
+  font-style:normal;
+  font-weight:400 600;
+  font-display:swap;
+  src:url('/static/kit/fonts/jetbrains-mono-latin-ext.woff2') format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF
+}
+@font-face {
+  font-family:'JetBrains Mono';
+  font-style:normal;
+  font-weight:400 600;
+  font-display:swap;
+  src:url('/static/kit/fonts/jetbrains-mono-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
+}
+
+:root {
+  --bg:           #f9f4ea;
+  --bg-alt:       #f1ead9;
+  --ink:          #14110c;
+  --ink-soft:     #4d4940;
+  --ink-faint:    #8a857a;
+  --line:         #e6dec9;
+  --line-strong:  #c9c0a8;
+  --card:         #fffcf4;
+
+  --brand:        #3a3aa6;
+  --brand-strong: #25257a;
+  --brand-tint:   #ebebf8;
+  --brand-ink:    #1a1a55;
+  --on-brand:     #fff;
+
+  /* Verdict colours. Warm-leaning so they sit on paper without shouting. */
+  --ok:        #16a34a;
+  --ok-tint:   #dcfce7;
+  --warn:      #b45309;
+  --warn-tint: #fbeed5;
+  --bad:       #b91c1c;
+  --bad-tint:  #fae2df;
+  --crit:      #7f1d1d;
+
+  --wash-indigo: #d8d8f2;
+  --wash-sand:   #f5e9c8;
+
+  --shadow-xs: 0 1px 2px rgba(14, 15, 18, .04);
+  --shadow-sm: 0 2px 6px rgba(14, 15, 18, .06), 0 1px 2px rgba(14, 15, 18, .04);
+  --shadow:    0 8px 24px rgba(14, 15, 18, .08), 0 2px 6px rgba(14, 15, 18, .04);
+  --inset-hairline: inset 0 0 0 1px rgba(14, 15, 18, .04);
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  --container-w: min(1180px, 92vw);
+
+  /* Scripts without their own cut fall through to whatever the system has. */
+  --font-display: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Noto Sans', 'Noto Sans Arabic',
+               'Noto Sans Devanagari', 'Noto Sans SC', 'Noto Sans JP', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono-i18n: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo,
+                    'Noto Sans Arabic', 'Noto Sans Devanagari', 'Noto Sans', sans-serif;
+
+  --tracking-display: -0.02em;
+  --tracking-eyebrow: 0.14em;
+
+  --t-fast: 140ms cubic-bezier(.2, .6, .2, 1);
+  --t-base: 240ms cubic-bezier(.2, .6, .2, 1);
+}
+
+/* The same palette after dark: paper becomes ink, ink becomes paper, and the
+   accent is lifted so it still carries on a dark ground. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:          #14110c;
+    --bg-alt:      #1b1710;
+    --ink:         #f6f1e6;
+    --ink-soft:    #c2bbac;
+    --ink-faint:   #8d867a;
+    --line:        #2a251c;
+    --line-strong: #3f382c;
+    --card:        #1b1710;
+
+    --brand:        #9d9dfb;
+    --brand-strong: #bcbcff;
+    --brand-tint:   #241f45;
+    --brand-ink:    #cfcfff;
+    /* The accent lifts after dark, so the label on it turns to ink. */
+    --on-brand:     #14110c;
+
+    --ok:        #4ade80;
+    --ok-tint:   #13321f;
+    --warn:      #fbbf24;
+    --warn-tint: #362707;
+    --bad:       #f87171;
+    --bad-tint:  #381614;
+    --crit:      #fb7185;
+
+    --wash-indigo: #1d1a38;
+    --wash-sand:   #241e12;
+
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, .35);
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, .4), 0 1px 2px rgba(0, 0, 0, .3);
+    --shadow:    0 8px 24px rgba(0, 0, 0, .45), 0 2px 6px rgba(0, 0, 0, .3);
+    --inset-hairline: inset 0 0 0 1px rgba(255, 255, 255, .04);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box }
+/* An author `display` beats the browser's own [hidden] rule. */
+[hidden] { display: none !important }
+html { scroll-behavior: smooth }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(60% 55% at 100% 0%, var(--wash-indigo) 0%, transparent 55%),
+    radial-gradient(50% 50% at 0% 100%, var(--wash-sand) 0%, transparent 60%),
+    var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
+
+::selection { background: var(--brand-tint); color: var(--brand-ink) }
+
+.wrap { width: var(--container-w); margin: 0 auto; padding: 26px 0 72px }
+
+/* ---------- header ---------- */
+header {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  align-items: center; justify-content: space-between;
+  padding-bottom: 22px; margin-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 13px; min-width: 0 }
+.logo { width: 42px; height: 42px; flex: none; display: block }
+.logo svg { display: block; width: 100%; height: 100% }
+/* The tile inverts after dark so the mark keeps its ground. */
+.logo .tile { fill: var(--ink) }
+.logo .glyph { fill: var(--bg); stroke: var(--bg) }
+.logo .accent { fill: var(--brand) }
+/* The wordmark carries the indigo dot from the design system: 9px, ringed. */
+.wordmark { display: flex; align-items: center; gap: 9px }
+.brand-dot {
+  width: 9px; height: 9px; border-radius: 50%; flex: none;
+  background: var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 18%, transparent);
+}
+h1 {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 700; letter-spacing: var(--tracking-display);
+  margin: 0; color: var(--ink);
+}
+.sub { color: var(--ink-soft); font-size: 13.5px; margin-top: 3px; margin-inline-start: 18px }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
+
+button, select, input { font: inherit; color: var(--ink) }
+
+button {
+  font-family: var(--font-body); font-size: 13.5px; font-weight: 500; cursor: pointer;
+  background: var(--card); color: var(--ink);
+  border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
+  padding: 9px 14px; transition: all var(--t-fast);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+button:hover { border-color: var(--ink); background: var(--bg-alt) }
+button:active { transform: translateY(1px) }
+button.primary {
+  background: var(--brand); color: var(--on-brand); border-color: transparent;
+  font-weight: 600; box-shadow: 0 2px 8px rgba(58, 58, 166, .24);
+}
+button.primary:hover { background: var(--brand-strong); color: var(--on-brand) }
+button:disabled { opacity: .45; cursor: default; transform: none }
+button .mark { font-family: var(--font-mono); font-size: 13px; opacity: .7 }
+
+/* The language switcher borrows the pill from the main site. */
+select {
+  appearance: none; cursor: pointer;
+  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .06em;
+  background: var(--card); border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill); padding: 8px 30px 8px 14px;
+  transition: border-color var(--t-fast);
+  background-image:
+    linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: right 15px center, right 10px center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+select:hover { border-color: var(--ink) }
+
+:is(button, select, input):focus-visible { outline: 2px solid var(--brand); outline-offset: 2px }
+
+.ghlink {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13.5px; font-weight: 500; text-decoration: none;
+  color: var(--ink); background: var(--card);
+  border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
+  padding: 9px 14px; transition: all var(--t-fast);
+}
+.ghlink:hover { border-color: var(--ink); background: var(--bg-alt) }
+.ghlink:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px }
+
+/* ---------- search ---------- */
+.search { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap }
+.search input {
+  flex: 1; min-width: 220px;
+  background: var(--card); border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm); padding: 11px 15px;
+  font-family: var(--font-mono); font-size: 13.5px; direction: ltr;
+  transition: border-color var(--t-fast);
+}
+.search input::placeholder { color: var(--ink-faint); font-family: var(--font-body) }
+.search input:focus { border-color: var(--ink); outline: none }
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  background:
+    radial-gradient(75% 110% at 88% 8%, var(--wash-indigo) 0%, transparent 62%),
+    linear-gradient(180deg, var(--card) 0%, var(--bg-alt) 100%);
+  box-shadow: var(--shadow-sm), var(--inset-hairline);
+  padding: 26px 28px; margin-bottom: 18px;
+  display: flex; gap: 28px; align-items: center; flex-wrap: wrap;
+}
+.hero-grade { display: flex; flex-direction: column; align-items: center; gap: 9px; flex: none }
+.grade-badge {
+  width: 108px; height: 108px; border-radius: var(--radius-xl);
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-size: 46px; font-weight: 700;
+  letter-spacing: -0.04em; line-height: 1;
+  color: var(--bg); background: var(--ink);
+  box-shadow: var(--shadow-sm);
+  /* "A+" and "A-" are marks, not text: keep the sign on the right in RTL. */
+  direction: ltr; unicode-bidi: isolate;
+  transition: background var(--t-base);
+}
+.grade-badge.pending {
+  background: transparent; color: var(--ink-faint);
+  border: 1px dashed var(--line-strong); box-shadow: none; font-size: 34px;
+}
+.grade-badge.g-a { background: #16a34a }
+.grade-badge.g-b { background: #4d7c0f }
+.grade-badge.g-c { background: #b45309 }
+.grade-badge.g-d { background: #c2410c }
+.grade-badge.g-e { background: #b91c1c }
+.grade-badge.g-f { background: #7f1d1d }
+/* "?" is a verdict about the scan, not about the target — the accent carries it. */
+.grade-badge.g-unknown { background: var(--brand-strong) }
+.grade-caption {
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--ink-faint);
+}
+.hero-main { flex: 1; min-width: 240px }
+.hero-label {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+  color: var(--ink-faint); margin-bottom: 8px;
+}
+.host-line { display: flex; align-items: center; gap: 14px; flex-wrap: wrap }
+.host {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(24px, 4.4vw, 38px); letter-spacing: -0.025em;
+  line-height: 1.05; color: var(--ink); word-break: break-all; direction: ltr;
+}
+.hero-meta { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 7px }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 11.5px;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius-pill); padding: 5px 12px; color: var(--ink-soft);
+}
+.chip.ok { border-color: color-mix(in srgb, var(--ok) 40%, transparent); color: var(--ok) }
+.chip.warn { border-color: color-mix(in srgb, var(--warn) 40%, transparent); color: var(--warn) }
+.chip.bad { border-color: color-mix(in srgb, var(--bad) 40%, transparent); color: var(--bad) }
+
+/* ---------- progress ---------- */
+.progress { margin-top: 16px }
+.progress-bar { height: 5px; border-radius: var(--radius-pill); background: var(--line); overflow: hidden }
+.progress-fill {
+  height: 100%; width: 0; border-radius: var(--radius-pill);
+  background: var(--brand); transition: width .4s var(--t-base);
+}
+.progress-label {
+  margin-top: 8px; font-family: var(--font-mono); font-size: 11.5px;
+  letter-spacing: .02em; color: var(--ink-faint);
+}
+
+/* ---------- alerts ---------- */
+#alerts { display: grid; gap: 8px; margin-bottom: 18px }
+#alerts:empty { margin: 0 }
+.alert {
+  border-radius: var(--radius-md); padding: 13px 16px; font-size: 13.5px;
+  border: 1px solid var(--line); background: var(--card);
+  display: flex; gap: 11px; align-items: flex-start; line-height: 1.5;
+  box-shadow: var(--shadow-xs);
+}
+.alert code {
+  background: var(--bg-alt); padding: 1px 6px; border-radius: var(--radius-xs);
+  font-family: var(--font-mono); font-size: 12px; direction: ltr; display: inline-block;
+}
+.alert .alert-body { min-width: 0 }
+.alert .alert-title { font-weight: 600; margin-bottom: 3px }
+.alert ul { margin: 6px 0 0; padding-inline-start: 20px }
+.alert.warn { border-color: color-mix(in srgb, var(--warn) 40%, transparent); background: var(--warn-tint) }
+.alert.bad { border-color: color-mix(in srgb, var(--bad) 40%, transparent); background: var(--bad-tint) }
+.alert.ok { border-color: color-mix(in srgb, var(--ok) 40%, transparent); background: var(--ok-tint) }
+@media (prefers-color-scheme: dark) {
+  .alert.warn, .alert.bad, .alert.ok { color: var(--ink) }
+}
+
+/* ---------- cards ---------- */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; align-items: start }
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius-md); padding: 18px 20px 10px;
+  box-shadow: var(--shadow-xs), var(--inset-hairline);
+  transition: border-color var(--t-fast);
+}
+.card:hover { border-color: var(--line-strong) }
+.card.wide { grid-column: 1/-1 }
+.card h2 {
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+  color: var(--ink-faint); margin: 0 0 14px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--line);
+}
+.row {
+  display: flex; gap: 14px; justify-content: space-between; align-items: baseline;
+  padding: 8px 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
+}
+.row:last-child { border-bottom: none }
+.k { color: var(--ink-soft); font-size: 13px; flex: none; max-width: 50% }
+.v {
+  font-family: var(--font-mono-i18n); font-size: 12.5px; text-align: end; color: var(--ink);
+  unicode-bidi: plaintext; word-break: break-word; overflow-wrap: anywhere;
+}
+.v.ok { color: var(--ok) }
+.v.warn { color: var(--warn) }
+.v.bad { color: var(--bad) }
+.v.muted { color: var(--ink-faint) }
+.v.big { font-size: 14.5px; font-weight: 500 }
+.v a { color: var(--brand); text-decoration: none }
+.v a:hover { text-decoration: underline }
+.skeleton {
+  display: inline-block; min-width: 90px; height: 11px;
+  border-radius: var(--radius-xs); color: transparent !important;
+  background: linear-gradient(90deg, var(--line) 25%, var(--bg-alt) 50%, var(--line) 75%);
+  background-size: 200% 100%; animation: sk 1.3s infinite;
+}
+@keyframes sk { 0% { background-position: 200% 0 } 100% { background-position: -200% 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none }
+  .progress-fill, .grade-badge { transition: none }
+  html { scroll-behavior: auto }
+}
+
+/* ---------- score meters ---------- */
+.meter { display: flex; align-items: center; gap: 12px; padding: 7px 0 }
+.meter .k { flex: 0 0 40%; max-width: 40% }
+.meter .bar { flex: 1; height: 6px; border-radius: var(--radius-pill); background: var(--line); overflow: hidden }
+.meter .bar i {
+  display: block; height: 100%; width: 0; border-radius: var(--radius-pill);
+  background: var(--brand); transition: width .5s var(--t-base);
+}
+.meter .v { flex: none; min-width: 34px }
+
+/* ---------- tags ---------- */
+.tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0 4px }
+.tags:empty { padding: 0 }
+.tag {
+  font-family: var(--font-mono); font-size: 11px; padding: 4px 10px;
+  border-radius: var(--radius-pill); border: 1px solid var(--line);
+  background: var(--bg-alt); color: var(--ink-soft);
+}
+.tag.bad { border-color: color-mix(in srgb, var(--bad) 35%, transparent); background: var(--bad-tint); color: var(--bad) }
+.tag.warn { border-color: color-mix(in srgb, var(--warn) 35%, transparent); background: var(--warn-tint); color: var(--warn) }
+.tag.ok { border-color: color-mix(in srgb, var(--ok) 35%, transparent); background: var(--ok-tint); color: var(--ok) }
+
+/* ---------- findings ---------- */
+.findings { display: grid; gap: 8px; padding-bottom: 8px }
+.findings .empty-note { color: var(--ink-faint); font-size: 13px; padding: 4px 0 8px }
+.finding {
+  display: flex; gap: 13px; align-items: flex-start;
+  border: 1px solid var(--line); border-radius: var(--radius-md);
+  padding: 12px 14px; background: var(--bg-alt);
+}
+.finding .sev {
+  flex: none; font-family: var(--font-mono); font-size: 10px;
+  text-transform: uppercase; letter-spacing: .08em;
+  padding: 4px 9px; border-radius: var(--radius-pill);
+  min-width: 78px; text-align: center;
+}
+.sev-critical { background: color-mix(in srgb, var(--crit) 16%, transparent); color: var(--crit) }
+.sev-high { background: var(--bad-tint); color: var(--bad) }
+.sev-medium { background: var(--warn-tint); color: var(--warn) }
+.sev-low { background: var(--bg); color: var(--ink-faint); border: 1px solid var(--line) }
+.sev-info { background: var(--bg); color: var(--ink-faint); border: 1px solid var(--line) }
+.sev-ok { background: var(--ok-tint); color: var(--ok) }
+.finding .body { flex: 1; min-width: 0 }
+.finding .title { font-weight: 600; font-size: 13.5px; color: var(--ink) }
+.finding .title .where { color: var(--ink-faint); font-weight: 400; font-size: 11.5px; font-family: var(--font-mono) }
+.finding .desc { color: var(--ink-soft); font-size: 12.5px; margin-top: 3px; line-height: 1.5 }
+.finding .state { font-family: var(--font-mono); font-size: 11.5px; flex: none; align-self: center }
+
+/* ---------- tables ---------- */
+.table-wrap { overflow-x: auto; margin: 4px 0 12px }
+.table { width: 100%; border-collapse: collapse; font-size: 12.5px }
+.table th {
+  text-align: start; font-family: var(--font-mono); font-weight: 500;
+  font-size: 10.5px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+  color: var(--ink-faint); padding: 8px 12px 8px 0;
+  border-bottom: 1px solid var(--line-strong); white-space: nowrap;
+}
+.table td {
+  padding: 8px 12px 8px 0; vertical-align: top; color: var(--ink);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
+}
+.table tr:last-child td { border-bottom: none }
+.table td.mono { font-family: var(--font-mono); direction: ltr }
+.table td.num { text-align: end; font-family: var(--font-mono) }
+.table .good { color: var(--ok) }
+.table .legacy { color: var(--warn) }
+.table .weak { color: var(--bad) }
+.table .insecure { color: var(--crit); font-weight: 600 }
+
+/* ---------- a tree, for anything nested: SPF includes, redirect chains ---------- */
+.tree { list-style: none; margin: 10px 0 6px; padding: 0; font-size: 12.5px }
+.tree ul { list-style: none; margin: 0; padding-inline-start: 18px }
+.tree li {
+  position: relative; padding: 6px 0 6px 4px;
+  border-inline-start: 1px solid var(--line-strong); margin-inline-start: 6px;
+  padding-inline-start: 16px;
+}
+.tree li::before {
+  content: ''; position: absolute; inset-inline-start: 0; top: 17px;
+  width: 11px; height: 1px; background: var(--line-strong);
+}
+.tree li > .label { font-family: var(--font-mono-i18n); word-break: break-word; color: var(--ink) }
+.tree li > .meta { color: var(--ink-faint); margin-top: 2px }
+.tree li.bad > .label { color: var(--bad) }
+.tree li.warn > .label { color: var(--warn) }
+
+/* ---------- misc ---------- */
+.note { color: var(--ink-faint); font-size: 12px; padding: 10px 0 12px; line-height: 1.5 }
+.sub-head {
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+  color: var(--ink-faint); margin: 16px 0 6px;
+}
+.kvlist { font-size: 12.5px; display: grid; gap: 6px; padding-bottom: 8px }
+.kvlist .kv { display: flex; gap: 12px; justify-content: space-between; align-items: baseline }
+.kvlist .kv .name {
+  color: var(--ink-faint); font-family: var(--font-mono); flex: none;
+  max-width: 45%; word-break: break-all;
+}
+.kvlist .kv .val {
+  font-family: var(--font-mono-i18n); text-align: end;
+  word-break: break-word; overflow-wrap: anywhere;
+}
+.kvlist .empty { color: var(--ink-faint) }
+pre.raw {
+  font-family: var(--font-mono); font-size: 11.5px; line-height: 1.6;
+  background: var(--bg-alt); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 14px; margin: 0 0 12px;
+  max-height: 420px; overflow: auto;
+  white-space: pre-wrap; word-break: break-all; direction: ltr; text-align: left;
+  color: var(--ink-soft);
+}
+
+.empty {
+  border: 1px dashed var(--line-strong); border-radius: var(--radius-lg);
+  padding: 32px 24px; text-align: center; color: var(--ink-soft);
+  font-size: 14.5px; line-height: 1.55; margin-top: 18px;
+}
+.examples { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 18px }
+.examples button { font-family: var(--font-mono); font-size: 12.5px }
+.examples-label {
+  font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow); color: var(--ink-faint); margin-top: 20px;
+}
+
+footer {
+  margin-top: 40px; padding-top: 26px; border-top: 1px solid var(--line);
+  color: var(--ink-faint); font-size: 12px; text-align: center; line-height: 1.9;
+}
+footer code {
+  font-family: var(--font-mono); background: var(--card);
+  border: 1px solid var(--line); padding: 2px 7px; border-radius: var(--radius-xs);
+  direction: ltr; display: inline-block; color: var(--ink-soft);
+}
+footer a { color: var(--brand); text-decoration: none }
+footer a:hover { text-decoration: underline }
+
+/* The family strip. Rendered on the server, so it is in the markup a crawler
+   sees; the current service is present but not a link. */
+.services {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  margin: 4px 0 20px;
+}
+.services .svc {
+  font-family: var(--font-mono); font-size: 11.5px;
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+  padding: 5px 13px; background: var(--card); color: var(--ink-soft);
+  text-decoration: none; transition: all var(--t-fast);
+}
+.services a.svc:hover { border-color: var(--ink); color: var(--ink) }
+.services .svc.current {
+  border-color: color-mix(in srgb, var(--brand) 45%, transparent);
+  background: var(--brand-tint); color: var(--brand-ink);
+}
+
+.footer-credit { display: inline-flex; align-items: center; margin-top: 18px; opacity: .55; transition: opacity var(--t-fast) }
+.footer-credit:hover { opacity: 1 }
+/* The wordmark is drawn in near-black, which is right on paper and wrong on ink. */
+.footer-credit img { height: 16px; width: auto; display: block }
+@media (prefers-color-scheme: dark) { .footer-credit img { filter: invert(1) } }
+
+.toast {
+  position: fixed; inset-inline-start: 50%; bottom: 28px; transform: translate(-50%, 20px);
+  background: var(--ink); color: var(--bg); border: 1px solid var(--ink);
+  padding: 11px 18px; border-radius: var(--radius-sm); font-size: 13.5px;
+  opacity: 0; pointer-events: none; transition: all var(--t-base); z-index: 50;
+  box-shadow: var(--shadow);
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0) }
+
+/* Uppercase headings with letter-spacing look wrong in scripts that have no
+   capital letters or that rely on cursive joining. */
+:is([lang=ar], [lang=zh], [lang=ja], [lang=hi])
+:is(.card h2, .hero-label, .sub-head, .table th, .grade-caption, .finding .sev, .examples-label) {
+  text-transform: none; letter-spacing: .02em;
+}
+[dir=rtl] .toast { transform: translate(50%, 20px) }
+[dir=rtl] .toast.show { transform: translate(50%, 0) }
+[dir=rtl] select {
+  background-image:
+    linear-gradient(-45deg, transparent 50%, currentColor 50%),
+    linear-gradient(-135deg, currentColor 50%, transparent 50%);
+  background-position: left 15px center, left 20px center;
+}
+[dir=rtl] .tree li::before { transform: scaleX(-1); transform-origin: right center }
