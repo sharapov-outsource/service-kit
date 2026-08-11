@@ -9,7 +9,10 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+import { createService } from '../lib/service.js';
 import { wantedFormat, clean } from '../lib/format.js';
 import { buildCsp, inlineScriptHashes, metrikaSnippet } from '../lib/security.js';
 import { createCache } from '../lib/cache.js';
@@ -272,4 +275,93 @@ test('a name from the dictionary is escaped before it reaches the markup', () =>
   const html = renderServiceLinks('mydns', () => '<script>alert(1)</script>');
   assert.ok(!html.includes('<script>'), html);
   assert.ok(html.includes('&lt;script&gt;'));
+});
+
+/* ------------------------------------------------------------------ *
+ * The shell
+ *
+ * These build a real service against a fixture directory and inject
+ * requests into it, so the routes are exercised without a socket.
+ * ------------------------------------------------------------------ */
+
+const FIXTURE = path.join(path.dirname(fileURLToPath(import.meta.url)), 'fixture');
+
+/** A service with just enough wired up to answer. */
+function fixtureService(overrides = {}) {
+  return createService({
+    slug: 'mydns',
+    name: 'Fixture',
+    domain: 'fixture.example',
+    port: 0,
+    root: FIXTURE,
+    stages: ['one'],
+    parse: raw => (raw === 'bad' ? { error: 'invalid-host' } : { host: String(raw) }),
+    run: async target => ({ host: target.host, ok: true }),
+    ...overrides,
+  });
+}
+
+const asConsole = { method: 'GET', url: '/', headers: { 'user-agent': 'curl/8.7.1' } };
+
+test('a service adds usage lines without replacing the ones it did not write', async () => {
+  const service = await fixtureService({
+    usage: {
+      usage: { port: 'GET /api/<host>:8443' },
+      allowedPorts: [443, 8443],
+    },
+  });
+  const body = JSON.parse((await service.app.inject(asConsole)).body);
+
+  // The line the service added is there...
+  assert.equal(body.usage.port, 'GET /api/<host>:8443');
+  // ...and so is every line it did not, which a plain spread would have eaten.
+  assert.equal(typeof body.usage.scan, 'string');
+  assert.equal(typeof body.usage.stream, 'string');
+  assert.equal(typeof body.usage.lang, 'string');
+  // Fields beside `usage` still land at the top level.
+  assert.deepEqual(body.allowedPorts, [443, 8443]);
+
+  await service.app.close();
+});
+
+test('without a home target the root tells a console client how to use the service', async () => {
+  const service = await fixtureService();
+  const body = JSON.parse((await service.app.inject(asConsole)).body);
+
+  assert.equal(body.service, 'mydns');
+  assert.ok(body.usage.scan);
+  assert.equal(body.ok, undefined);
+
+  await service.app.close();
+});
+
+test('a home target makes the root a report about the caller', async () => {
+  const service = await fixtureService({ homeTarget: () => 'self.example' });
+  const body = JSON.parse((await service.app.inject(asConsole)).body);
+
+  // The scan ran, and the usage block did not take its place.
+  assert.equal(body.host, 'self.example');
+  assert.equal(body.ok, true);
+  assert.equal(body.usage, undefined);
+
+  // Usage is still reachable where it always was.
+  const usage = JSON.parse((await service.app.inject({ ...asConsole, url: '/api' })).body);
+  assert.ok(usage.usage.scan);
+
+  await service.app.close();
+});
+
+test('a home target leaves the page alone: still canonical, still indexable', async () => {
+  const service = await fixtureService({ homeTarget: () => 'self.example' });
+  const page = await service.app.inject({
+    method: 'GET', url: '/', headers: { 'user-agent': 'Mozilla/5.0', accept: 'text/html' },
+  });
+
+  assert.match(page.body, /<meta name="robots" content="index, follow">/);
+  // Canonical stays the root — the report is about the caller, not a page of
+  // its own, and every caller would otherwise claim a different canonical URL.
+  assert.match(page.body, /<link rel="canonical" href="[^"]*\/">/);
+  assert.doesNotMatch(page.body, /self\.example/);
+
+  await service.app.close();
 });
