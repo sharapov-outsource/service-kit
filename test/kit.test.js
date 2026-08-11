@@ -344,9 +344,11 @@ test('a home target makes the root a report about the caller', async () => {
   assert.equal(body.ok, true);
   assert.equal(body.usage, undefined);
 
-  // Usage is still reachable where it always was.
-  const usage = JSON.parse((await service.app.inject({ ...asConsole, url: '/api' })).body);
-  assert.ok(usage.usage.scan);
+  // `/api` answers the same way. Telling a caller to name a target is not
+  // useful advice from a service that has already answered about them.
+  const api = JSON.parse((await service.app.inject({ ...asConsole, url: '/api' })).body);
+  assert.equal(api.host, 'self.example');
+  assert.equal(api.usage, undefined);
 
   await service.app.close();
 });
