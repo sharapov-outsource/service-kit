@@ -457,3 +457,32 @@ test('/api refuses an output format it does not know', async () => {
     await service.app.close();
   }
 });
+
+test('a dictionary that layers over the shared one must load it on the page too', async () => {
+  const { checkTranslations } = await import('../lib/check-i18n.js');
+  const { writeFileSync, readFileSync, mkdtempSync, cpSync } = await import('node:fs');
+  const os = await import('node:os');
+
+  const root = mkdtempSync(path.join(os.tmpdir(), 'kit-i18n-'));
+  cpSync(FIXTURE, root, { recursive: true });
+  const page = path.join(root, 'public/index.html');
+  const html = readFileSync(page, 'utf8');
+  writeFileSync(path.join(root, 'public/app.js'), '');
+
+  // The fixture dictionary calls mergeI18N; its page loads no scripts at all.
+  const missing = checkTranslations({ root });
+  assert.ok(missing.problems.some(p => p.includes('i18n-common.js')), missing.problems.join(' | '));
+
+  // Loading it after the service dictionary is just as broken as not at all.
+  writeFileSync(page, html.replace('</body>',
+    '<script src="/static/i18n.js"></script><script src="/static/kit/i18n-common.js"></script></body>'));
+  const wrongOrder = checkTranslations({ root });
+  assert.ok(wrongOrder.problems.some(p => p.includes('before the service dictionary')),
+    wrongOrder.problems.join(' | '));
+
+  // In the right order there is nothing to say.
+  writeFileSync(page, html.replace('</body>',
+    '<script src="/static/kit/i18n-common.js"></script><script src="/static/i18n.js"></script></body>'));
+  const ordered = checkTranslations({ root });
+  assert.deepEqual(ordered.problems.filter(p => p.includes('i18n-common')), []);
+});
