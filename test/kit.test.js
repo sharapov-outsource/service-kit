@@ -416,3 +416,44 @@ test('robots.txt lets a crawler fetch the scripts that draw the page', async () 
 
   await service.app.close();
 });
+
+test('the raw template is not reachable through the static mount', async () => {
+  const service = await fixtureService();
+
+  // The rendered page has its placeholders filled in...
+  const page = await service.app.inject({
+    method: 'GET', url: '/', headers: { 'user-agent': 'Mozilla/5.0', accept: 'text/html' },
+  });
+  assert.doesNotMatch(page.body, /%[A-Z_]+%/);
+
+  // ...and the file it was rendered from is not served beside it.
+  const raw = await service.app.inject({ method: 'GET', url: '/static/index.html' });
+  assert.equal(raw.statusCode, 404);
+
+  await service.app.close();
+});
+
+test('a report page tells crawlers to keep it out of the index', async () => {
+  const service = await fixtureService();
+  const browser = { 'user-agent': 'Mozilla/5.0', accept: 'text/html' };
+
+  const home = await service.app.inject({ method: 'GET', url: '/', headers: browser });
+  assert.equal(home.headers['x-robots-tag'], 'index, follow');
+
+  const report = await service.app.inject({ method: 'GET', url: '/host.example', headers: browser });
+  assert.equal(report.headers['x-robots-tag'], 'noindex, follow');
+  assert.match(report.body, /<meta name="robots" content="noindex, follow">/);
+
+  await service.app.close();
+});
+
+test('/api refuses an output format it does not know', async () => {
+  for (const overrides of [{}, { homeTarget: () => 'self.example' }]) {
+    const service = await fixtureService(overrides);
+    const res = await service.app.inject({
+      method: 'GET', url: '/api?output=xml', headers: { 'user-agent': 'curl/8.7.1' },
+    });
+    assert.equal(res.statusCode, 400);
+    await service.app.close();
+  }
+});
