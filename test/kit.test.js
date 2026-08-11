@@ -367,3 +367,52 @@ test('a home target leaves the page alone: still canonical, still indexable', as
 
   await service.app.close();
 });
+
+test('the language reaches the scan and the cache key that stores it', async () => {
+  const seen = [];
+  const service = await fixtureService({
+    run: async (target, options) => {
+      seen.push(options.lang);
+      return { host: target.host, lang: options.lang };
+    },
+    cacheSuffix: (query, lang) => lang,
+  });
+
+  const ask = lang => service.app.inject({
+    method: 'GET', url: '/self', headers: { 'user-agent': 'curl/8.7.1', 'accept-language': lang },
+  });
+
+  assert.equal(JSON.parse((await ask('en')).body).lang, 'en');
+  assert.equal(JSON.parse((await ask('ru')).body).lang, 'ru');
+  // Two languages, two entries — not one cached report handed to both.
+  assert.deepEqual(seen, ['en', 'ru']);
+  // ...and asking again in a language already seen is served from the cache.
+  assert.equal(JSON.parse((await ask('ru')).body).lang, 'ru');
+  assert.deepEqual(seen, ['en', 'ru']);
+
+  await service.app.close();
+});
+
+test('a report title falls back to the full title when there is no short one', async () => {
+  const service = await fixtureService();
+  const page = await service.app.inject({
+    method: 'GET', url: '/host.example', headers: { 'user-agent': 'Mozilla/5.0', accept: 'text/html' },
+  });
+
+  assert.match(page.body, /<title>host\.example — Fixture<\/title>/);
+  assert.doesNotMatch(page.body, /undefined/);
+
+  await service.app.close();
+});
+
+test('robots.txt lets a crawler fetch the scripts that draw the page', async () => {
+  const service = await fixtureService();
+  const robots = (await service.app.inject({ method: 'GET', url: '/robots.txt' })).body;
+
+  assert.match(robots, /^Allow: \/static\/$/m);
+  assert.match(robots, /^Disallow: \/$/m);
+  assert.match(robots, /^Disallow: \/api$/m);
+  assert.match(robots, /Sitemap: /);
+
+  await service.app.close();
+});
