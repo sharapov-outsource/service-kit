@@ -9,12 +9,22 @@ extracted from a service that already worked rather than designed up front, and
 every export earns its place by having been duplicated at least twice.
 
 ```json
-"@sharapov/service-kit": "github:sharapov-outsource/service-kit#v1.0.0"
+"@sharapov/service-kit": "git+https://github.com/sharapov-outsource/service-kit.git#v1.4.1"
 ```
 
 npm resolves git dependencies natively; no registry is involved. The tag is
 deliberate — a service moves to a new version when somebody decides to, not on
 the next `npm i`.
+
+Write the URL out rather than using the `github:` shorthand: the shorthand
+resolves to `git+ssh://`, and a build machine has no SSH key. npm records that
+form in `package-lock.json` regardless, so after every version change rewrite it
+and check the result the way CI will see it:
+
+```bash
+sed -i '' 's|git+ssh://git@github.com/|git+https://github.com/|g' package-lock.json
+GIT_SSH_COMMAND=/usr/bin/false npm ci   # fails here if any ssh URL is left
+```
 
 ## What a service looks like after this
 
