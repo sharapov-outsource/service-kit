@@ -396,10 +396,17 @@ select {
   border: 1px solid var(--line); background: var(--card);
   display: flex; gap: 11px; align-items: flex-start; line-height: 1.5;
   box-shadow: var(--shadow-xs);
+  /* An alert quotes what the far end sent, and a host name or a header value
+     is often one token with nothing to break on. Without a break opportunity
+     inside it the box cannot narrow to the screen — and because #alerts is a
+     grid, one such alert widens every other alert with it, which on a phone
+     leaves the whole page scrolling sideways. */
+  word-break: break-word; overflow-wrap: anywhere;
 }
 .alert code {
   background: var(--bg-alt); padding: 1px 6px; border-radius: var(--radius-xs);
   font-family: var(--font-mono); font-size: 12px; direction: ltr; display: inline-block;
+  max-width: 100%;
 }
 .alert .alert-body { min-width: 0 }
 .alert .alert-title { font-weight: 600; margin-bottom: 3px }
@@ -412,7 +419,9 @@ select {
 }
 
 /* ---------- cards ---------- */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; align-items: start }
+/* min() keeps the 340px floor from outgrowing a 320px-wide phone, where a
+   fixed floor makes the cards hang off the side of the page. */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: 16px; align-items: start }
 .card {
   background: var(--card); border: 1px solid var(--line);
   border-radius: var(--radius-md); padding: 18px 20px 10px;
@@ -480,7 +489,10 @@ select {
 .tag.ok { border-color: color-mix(in srgb, var(--ok) 35%, transparent); background: var(--ok-tint); color: var(--ok) }
 
 /* ---------- findings ---------- */
-.findings { display: grid; gap: 8px; padding-bottom: 8px }
+.findings {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-bottom: 8px;
+  container-type: inline-size;
+}
 .findings .empty-note { color: var(--ink-faint); font-size: 13px; padding: 4px 0 8px }
 .finding {
   display: flex; gap: 13px; align-items: flex-start;
@@ -499,11 +511,25 @@ select {
 .sev-low { background: var(--bg); color: var(--ink-faint); border: 1px solid var(--line) }
 .sev-info { background: var(--bg); color: var(--ink-faint); border: 1px solid var(--line) }
 .sev-ok { background: var(--ok-tint); color: var(--ok) }
-.finding .body { flex: 1; min-width: 0 }
+/* min-width lets the body give way once the row is laid out; the wrapping is
+   what keeps a long host name or selector from setting the width in the first
+   place, since a track sized "auto" is sized from its widest item's longest
+   unbreakable run. */
+.finding .body { flex: 1; min-width: 0; word-break: break-word; overflow-wrap: anywhere }
 .finding .title { font-weight: 600; font-size: 13.5px; color: var(--ink) }
 .finding .title .where { color: var(--ink-faint); font-weight: 400; font-size: 11.5px; font-family: var(--font-mono) }
 .finding .desc { color: var(--ink-soft); font-size: 12.5px; margin-top: 3px; line-height: 1.5 }
 .finding .state { font-family: var(--font-mono); font-size: 11.5px; flex: none; align-self: center }
+/* On a card as narrow as a phone the severity and the status take more of the
+   row than the text they label, leaving it a channel a few characters wide.
+   There the two labels share the top line and the text gets the whole of the
+   next one. The card decides, not the window: on a wide screen this card
+   spans the grid and the row reads fine at three columns. */
+@container (max-width: 400px) {
+  .finding { flex-wrap: wrap; row-gap: 9px }
+  .finding .body { flex: 1 0 100%; order: 1 }
+  .finding .state { margin-inline-start: auto }
+}
 
 /* ---------- tables ---------- */
 .table-wrap { overflow-x: auto; margin: 4px 0 12px }
