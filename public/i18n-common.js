@@ -162,7 +162,7 @@ window.I18N_COMMON.ru = {
   k_checked_at: 'Проверено',
   k_elapsed: 'Заняло',
 
-  sev_critical: 'критично',
+  sev_critical: 'критический',
   sev_high: 'высокий',
   sev_medium: 'средний',
   sev_low: 'низкий',
@@ -189,7 +189,7 @@ window.I18N_COMMON.ru = {
   err_scan_timeout: 'Проверка заняла слишком много времени и была остановлена.',
   err_stage_timeout: 'Один из этапов занял слишком много времени и был остановлен.',
   err_scan_failed: 'Проверку не удалось завершить.',
-  err_busy: 'Сейчас выполняется слишком много проверок. Попробуйте через минуту.',
+  err_busy: 'Сейчас выполняется слишком много проверок. Попробуйте ещё раз чуть позже.',
   err_bad_output: 'Неподдерживаемый формат вывода. Доступны json, yaml и html.',
   err_network: 'Браузер не смог достучаться до сервиса.',
   err_bad_response: 'Сервис вернул нечитаемый ответ.',
@@ -197,9 +197,9 @@ window.I18N_COMMON.ru = {
 
   cap_scan_incomplete: 'проверка неполная, поэтому оценка не выставлена',
   incomplete_title: 'Отчёт неполный',
-  incomplete_body: 'На часть проверок ответа не пришло, поэтому оценка не выставляется вовсе — вместо того чтобы гадать. Ниже перечислено, чего не хватает.',
+  incomplete_body: 'На часть проверок ответа не пришло, поэтому оценка не выставлена: гадать вместо ответа мы не станем. Ниже перечислено, чего не хватает.',
 
-  api_hint: 'API: <code>curl {origin}/{example}</code> — добавьте <code>?output=json</code> или <code>?output=yaml</code> к любому адресу, либо используйте <code>/api/stream/{example}</code> для прогресса в реальном времени.',
+  api_hint: 'API: <code>curl {origin}/{example}</code> — добавьте <code>?output=json</code> или <code>?output=yaml</code> к любому адресу, либо запросите <code>/api/stream/{example}</code>, чтобы видеть ход проверки.',
   empty_examples: 'или попробуйте один из этих',
 
   footer_family: 'Другие инструменты',
