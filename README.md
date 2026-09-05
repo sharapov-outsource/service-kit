@@ -2,14 +2,15 @@
 
 The plumbing behind [myip](https://myip.sharapov.biz),
 [myssl](https://myssl.sharapov.biz), [mydns](https://mydns.sharapov.biz),
-[mymx](https://mymx.sharapov.biz) and [myheaders](https://myheaders.sharapov.biz).
+[mymx](https://mymx.sharapov.biz), [myheaders](https://myheaders.sharapov.biz) and
+[myneighbors](https://myneighbors.sharapov.biz).
 
 Three copies of five hundred lines is two copies too many. Everything here was
 extracted from a service that already worked rather than designed up front, and
 every export earns its place by having been duplicated at least twice.
 
 ```json
-"@sharapov/service-kit": "git+https://github.com/sharapov-outsource/service-kit.git#v1.4.1"
+"@sharapov/service-kit": "git+https://github.com/sharapov-outsource/service-kit.git#v1.5.0"
 ```
 
 npm resolves git dependencies natively; no registry is involved. The tag is

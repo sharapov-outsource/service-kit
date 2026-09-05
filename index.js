@@ -1,6 +1,6 @@
 /**
- * @sharapov/service-kit — the plumbing behind myip, myssl, mydns, mymx and
- * myheaders.
+ * @sharapov/service-kit — the plumbing behind myip, myssl, mydns, mymx,
+ * myheaders and myneighbors.
  *
  * Three copies of five hundred lines is two copies too many. Everything here
  * was extracted from a service that already worked, not designed up front, and

@@ -123,6 +123,7 @@ window.I18N_COMMON.en = {
   svc_mydns: 'DNS Check',
   svc_mymx: 'Mail Check',
   svc_myheaders: 'Headers Check',
+  svc_myneighbors: 'Neighbors Check',
 };
 
 window.I18N_COMMON.ru = {
@@ -212,6 +213,7 @@ window.I18N_COMMON.ru = {
   svc_mydns: 'Проверка DNS',
   svc_mymx: 'Проверка почты',
   svc_myheaders: 'Проверка заголовков',
+  svc_myneighbors: 'Соседи по IP',
 };
 
 window.I18N_COMMON.es = {
@@ -301,6 +303,7 @@ window.I18N_COMMON.es = {
   svc_mydns: 'Comprobación DNS',
   svc_mymx: 'Comprobación de correo',
   svc_myheaders: 'Comprobación de cabeceras',
+  svc_myneighbors: 'Vecinos de IP',
 };
 
 window.I18N_COMMON.zh = {
@@ -390,6 +393,7 @@ window.I18N_COMMON.zh = {
   svc_mydns: 'DNS 检测',
   svc_mymx: '邮件检测',
   svc_myheaders: '响应头检测',
+  svc_myneighbors: 'IP 邻居',
 };
 
 window.I18N_COMMON.hi = {
@@ -479,6 +483,7 @@ window.I18N_COMMON.hi = {
   svc_mydns: 'DNS जाँच',
   svc_mymx: 'मेल जाँच',
   svc_myheaders: 'हेडर जाँच',
+  svc_myneighbors: 'IP पड़ोसी',
 };
 
 window.I18N_COMMON.ar = {
@@ -568,6 +573,7 @@ window.I18N_COMMON.ar = {
   svc_mydns: 'فحص DNS',
   svc_mymx: 'فحص البريد',
   svc_myheaders: 'فحص الترويسات',
+  svc_myneighbors: 'جيران العنوان',
 };
 
 window.I18N_COMMON.pt = {
@@ -657,6 +663,7 @@ window.I18N_COMMON.pt = {
   svc_mydns: 'Verificação de DNS',
   svc_mymx: 'Verificação de e-mail',
   svc_myheaders: 'Verificação de cabeçalhos',
+  svc_myneighbors: 'Vizinhos de IP',
 };
 
 window.I18N_COMMON.fr = {
@@ -746,6 +753,7 @@ window.I18N_COMMON.fr = {
   svc_mydns: 'Contrôle DNS',
   svc_mymx: 'Contrôle e-mail',
   svc_myheaders: 'Contrôle des en-têtes',
+  svc_myneighbors: 'Voisins IP',
 };
 
 window.I18N_COMMON.de = {
@@ -835,6 +843,7 @@ window.I18N_COMMON.de = {
   svc_mydns: 'DNS-Prüfung',
   svc_mymx: 'Mail-Prüfung',
   svc_myheaders: 'Header-Prüfung',
+  svc_myneighbors: 'IP-Nachbarn',
 };
 
 window.I18N_COMMON.ja = {
@@ -924,6 +933,7 @@ window.I18N_COMMON.ja = {
   svc_mydns: 'DNS 検査',
   svc_mymx: 'メール検査',
   svc_myheaders: 'ヘッダー検査',
+  svc_myneighbors: 'IP のご近所',
 };
 
 window.I18N_COMMON.tr = {
@@ -1013,6 +1023,7 @@ window.I18N_COMMON.tr = {
   svc_mydns: 'DNS denetimi',
   svc_mymx: 'Posta denetimi',
   svc_myheaders: 'Başlık denetimi',
+  svc_myneighbors: 'IP Komşuları',
 };
 
 window.I18N_COMMON.uk = {
@@ -1102,6 +1113,7 @@ window.I18N_COMMON.uk = {
   svc_mydns: 'Перевірка DNS',
   svc_mymx: 'Перевірка пошти',
   svc_myheaders: 'Перевірка заголовків',
+  svc_myneighbors: 'Сусіди за IP',
 };
 
 /**
