@@ -206,6 +206,38 @@ test('something that is not an address at all is treated as private', () => {
   // Fail closed: an unparsable value must never be treated as safe to probe.
   assert.equal(isPrivateAddress('not-an-address'), true);
   assert.equal(isPrivateAddress(''), true);
+  assert.equal(isPrivateAddress('gggg::1'), true);
+  assert.equal(isPrivateAddress('1:2:3:4:5:6:7:8:9'), true);
+});
+
+test('an IPv6 address is judged by its bits, not by how it is spelled', () => {
+  /* One address has many spellings, and the ones that do not look like the
+     expected prefix are exactly the ones somebody writes on purpose. Each pair
+     below is the same address twice. */
+  for (const [canonical, alias] of [
+    ['::ffff:10.0.0.1', '0:0:0:0:0:ffff:10.0.0.1'],
+    ['::ffff:10.0.0.1', '::ffff:a00:1'],
+    ['::ffff:169.254.169.254', '::ffff:a9fe:a9fe'],
+    ['::ffff:8.8.8.8', '::ffff:808:808'],
+    ['::ffff:8.8.8.8', '0:0:0:0:0:ffff:808:808'],
+  ]) {
+    assert.equal(isPrivateAddress(alias), isPrivateAddress(canonical),
+      `${alias} must be judged the same as ${canonical}`);
+  }
+});
+
+test('the whole of every reserved IPv6 range is refused, not just its first prefix', () => {
+  // fe80::/10 is fe80 through febf; fc00::/7 is fc00 through fdff.
+  for (const address of ['fe80::1', 'fe9a::1', 'feb0::1', 'febf:ffff::1',
+    'fc00::1', 'fd00::1', 'fdff:ffff::1', 'ff02::1', 'ff00::', '100::1',
+    '::', '::1', '::10.0.0.1']) {
+    assert.equal(isPrivateAddress(address), true, address);
+  }
+  // Just outside those ranges, and therefore somebody else's public address.
+  for (const address of ['fe00::1', 'fec0::1', 'fb00::1', 'fe7f::1',
+    '2001:db8::1', '2606:4700:4700::1111', '::8.8.8.8']) {
+    assert.equal(isPrivateAddress(address), false, address);
+  }
 });
 
 /* ------------------------------------------------------------------ *
