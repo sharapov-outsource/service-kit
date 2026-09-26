@@ -124,6 +124,7 @@ window.I18N_COMMON.en = {
   svc_mymx: 'Mail Check',
   svc_myheaders: 'Headers Check',
   svc_myneighbors: 'Neighbors Check',
+  svc_myredirectchecker: 'Redirect Check',
 };
 
 window.I18N_COMMON.ru = {
@@ -214,6 +215,7 @@ window.I18N_COMMON.ru = {
   svc_mymx: 'Проверка почты',
   svc_myheaders: 'Проверка заголовков',
   svc_myneighbors: 'Соседи по IP',
+  svc_myredirectchecker: 'Проверка редиректов',
 };
 
 window.I18N_COMMON.es = {
@@ -304,6 +306,7 @@ window.I18N_COMMON.es = {
   svc_mymx: 'Comprobación de correo',
   svc_myheaders: 'Comprobación de cabeceras',
   svc_myneighbors: 'Vecinos de IP',
+  svc_myredirectchecker: 'Comprobación de redirecciones',
 };
 
 window.I18N_COMMON.zh = {
@@ -394,6 +397,7 @@ window.I18N_COMMON.zh = {
   svc_mymx: '邮件检测',
   svc_myheaders: '响应头检测',
   svc_myneighbors: 'IP 邻居',
+  svc_myredirectchecker: '重定向检测',
 };
 
 window.I18N_COMMON.hi = {
@@ -484,6 +488,7 @@ window.I18N_COMMON.hi = {
   svc_mymx: 'मेल जाँच',
   svc_myheaders: 'हेडर जाँच',
   svc_myneighbors: 'IP पड़ोसी',
+  svc_myredirectchecker: 'रीडायरेक्ट जाँच',
 };
 
 window.I18N_COMMON.ar = {
@@ -574,6 +579,7 @@ window.I18N_COMMON.ar = {
   svc_mymx: 'فحص البريد',
   svc_myheaders: 'فحص الترويسات',
   svc_myneighbors: 'جيران العنوان',
+  svc_myredirectchecker: 'فحص إعادة التوجيه',
 };
 
 window.I18N_COMMON.pt = {
@@ -664,6 +670,7 @@ window.I18N_COMMON.pt = {
   svc_mymx: 'Verificação de e-mail',
   svc_myheaders: 'Verificação de cabeçalhos',
   svc_myneighbors: 'Vizinhos de IP',
+  svc_myredirectchecker: 'Verificação de redirecionamentos',
 };
 
 window.I18N_COMMON.fr = {
@@ -754,6 +761,7 @@ window.I18N_COMMON.fr = {
   svc_mymx: 'Contrôle e-mail',
   svc_myheaders: 'Contrôle des en-têtes',
   svc_myneighbors: 'Voisins IP',
+  svc_myredirectchecker: 'Contrôle des redirections',
 };
 
 window.I18N_COMMON.de = {
@@ -844,6 +852,7 @@ window.I18N_COMMON.de = {
   svc_mymx: 'Mail-Prüfung',
   svc_myheaders: 'Header-Prüfung',
   svc_myneighbors: 'IP-Nachbarn',
+  svc_myredirectchecker: 'Weiterleitungs-Prüfung',
 };
 
 window.I18N_COMMON.ja = {
@@ -934,6 +943,7 @@ window.I18N_COMMON.ja = {
   svc_mymx: 'メール検査',
   svc_myheaders: 'ヘッダー検査',
   svc_myneighbors: 'IP のご近所',
+  svc_myredirectchecker: 'リダイレクト検査',
 };
 
 window.I18N_COMMON.tr = {
@@ -1024,6 +1034,7 @@ window.I18N_COMMON.tr = {
   svc_mymx: 'Posta denetimi',
   svc_myheaders: 'Başlık denetimi',
   svc_myneighbors: 'IP Komşuları',
+  svc_myredirectchecker: 'Yönlendirme denetimi',
 };
 
 window.I18N_COMMON.uk = {
@@ -1114,6 +1125,7 @@ window.I18N_COMMON.uk = {
   svc_mymx: 'Перевірка пошти',
   svc_myheaders: 'Перевірка заголовків',
   svc_myneighbors: 'Сусіди за IP',
+  svc_myredirectchecker: 'Перевірка перенаправлень',
 };
 
 /**

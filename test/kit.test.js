@@ -518,3 +518,47 @@ test('a dictionary that layers over the shared one must load it on the page too'
   const ordered = checkTranslations({ root });
   assert.deepEqual(ordered.problems.filter(p => p.includes('i18n-common')), []);
 });
+
+/* ------------------------------------------------------------------ *
+ * A target that is a whole URL
+ * ------------------------------------------------------------------ */
+
+test('a segment longer than the router limit is refused, and a service can raise the limit', async () => {
+  const long = encodeURIComponent(`https://example.com/landing?${'utm_campaign=spring&'.repeat(20)}`);
+  assert.ok(long.length > 300, 'the fixture must be longer than the default limit');
+  const ask = service => service.app.inject({
+    method: 'GET', url: `/api/${long}`, headers: { 'user-agent': 'curl/8.7.1' },
+  });
+
+  /* The default is kept for the services that take a host name: nothing about
+     their routing changes. A longer target is turned away before any route. */
+  const narrow = await fixtureService();
+  assert.equal((await ask(narrow)).statusCode, 414);
+  await narrow.app.close();
+
+  const wide = await fixtureService({ maxParamLength: 2048 });
+  const answer = await ask(wide);
+  assert.equal(answer.statusCode, 200);
+  assert.equal(JSON.parse(answer.body).host, decodeURIComponent(long));
+  await wide.app.close();
+});
+
+test('a download named after a URL gets a plain file name', async () => {
+  const service = await fixtureService({ cacheKey: target => target.host });
+  const answer = await service.app.inject({
+    method: 'GET',
+    url: `/api/${encodeURIComponent('https://example.com/a?b=c')}?download=1`,
+    headers: { 'user-agent': 'curl/8.7.1' },
+  });
+
+  assert.equal(answer.headers['content-disposition'],
+    'attachment; filename="mydns-https_example.com_a_b_c.json"');
+
+  // A host name comes through untouched.
+  const plain = await service.app.inject({
+    method: 'GET', url: '/api/example.com?download=1', headers: { 'user-agent': 'curl/8.7.1' },
+  });
+  assert.equal(plain.headers['content-disposition'], 'attachment; filename="mydns-example.com.json"');
+
+  await service.app.close();
+});

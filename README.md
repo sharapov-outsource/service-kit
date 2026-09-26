@@ -2,15 +2,16 @@
 
 The plumbing behind [myip](https://myip.sharapov.biz),
 [myssl](https://myssl.sharapov.biz), [mydns](https://mydns.sharapov.biz),
-[mymx](https://mymx.sharapov.biz), [myheaders](https://myheaders.sharapov.biz) and
-[myneighbors](https://myneighbors.sharapov.biz).
+[mymx](https://mymx.sharapov.biz), [myheaders](https://myheaders.sharapov.biz),
+[myneighbors](https://myneighbors.sharapov.biz) and
+[myredirectchecker](https://myredirectchecker.sharapov.biz).
 
 Three copies of five hundred lines is two copies too many. Everything here was
 extracted from a service that already worked rather than designed up front, and
 every export earns its place by having been duplicated at least twice.
 
 ```json
-"@sharapov/service-kit": "git+https://github.com/sharapov-outsource/service-kit.git#v1.5.0"
+"@sharapov/service-kit": "git+https://github.com/sharapov-outsource/service-kit.git#v1.6.0"
 ```
 
 npm resolves git dependencies natively; no registry is involved. The tag is
@@ -86,6 +87,12 @@ bank whose rate limiter refused forty connections in a row.
 **The design system.** Tokens, type, subset woff2 fonts with `unicode-range`,
 cards, tables, findings, the family footer — served from the package at
 `/static/kit/`, so a service ships only what is its own.
+
+**Targets longer than a host name.** A route takes one path segment of at most
+300 characters, which is plenty for a host and nowhere near enough for a URL
+with its tracking parameters. A service whose target is a whole URL raises the
+limit with `maxParamLength`, and passes `logTarget` so that the log line for a
+failed scan does not write down a token that arrived inside the link.
 
 **Templates** for the Dockerfile, the deploy workflow and `.dockerignore`.
 
